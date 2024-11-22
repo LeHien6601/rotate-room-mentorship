@@ -29,6 +29,10 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject Visual;
     private float fallIndex;
     private bool falling;
+    [SerializeField] private GameObject bullet;
+    [SerializeField] private Transform bulletPoint;
+    private bool canShoot = true;
+
 
 
     private void Start()
@@ -39,7 +43,10 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        Shoot();
+        if (canShoot)
+        {
+            Shoot();
+        }
         //Stable camera's state -> Ready for new rotation
         if (camFollow.timer == 0)
         {
@@ -254,8 +261,10 @@ public class Player : MonoBehaviour
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 shootDirection = Vector2.zero;
+            Vector3 oldRotation = Vector3.zero;
             if (directions[2] == Vector2.down)
             {
+                oldRotation = Vector3.zero;
                 if (mousePos.x > transform.position.x)
                 {
                     shootDirection = mousePos - transform.position;
@@ -269,6 +278,7 @@ public class Player : MonoBehaviour
             }
             else if (directions[2] == Vector2.up)
             {
+                oldRotation = new Vector3(0, 0, 180);
                 if (mousePos.x < transform.position.x)
                 {
                     shootDirection = mousePos - transform.position;
@@ -282,6 +292,7 @@ public class Player : MonoBehaviour
             }
             else if (directions[2] == Vector2.left)
             {
+                oldRotation = new Vector3(0, 0, -90);
                 if (mousePos.y < transform.position.y)
                 {
                     shootDirection = mousePos - transform.position;
@@ -295,6 +306,7 @@ public class Player : MonoBehaviour
             }
             else if (directions[2] == Vector2.right)
             {
+                oldRotation = new Vector3(0, 0, 90);
                 if (mousePos.y > transform.position.y)
                 {
                     shootDirection = mousePos - transform.position;
@@ -313,7 +325,23 @@ public class Player : MonoBehaviour
             Visual.transform.DOScale(new Vector2(0.75f, 1.5f), 0.15f);
             Visual.transform.DOScale(new Vector2(1.5f, 0.75f), 0.15f).SetDelay(0.15f);
             Visual.transform.DOScale(Vector2.one, 0.2f).SetDelay(0.3f);
+            Shooting();
+            Visual.transform.DORotate(oldRotation, 0.1f).SetDelay(0.5f);
         }
     }
 
+    private void Shooting()
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 shootDirection = mousePos - transform.position;
+        GameObject createdBullet = Instantiate(bullet, bulletPoint.position, Quaternion.identity);
+        createdBullet.GetComponent<PlayerBullet>().direction = shootDirection;
+        canShoot = false;
+        Invoke("ResetCanShoot", 1);
+    }
+
+    private void ResetCanShoot()
+    {
+        canShoot = true;
+    }
 }
