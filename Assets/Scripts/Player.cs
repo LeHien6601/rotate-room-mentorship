@@ -5,6 +5,7 @@ using static UnityEngine.ParticleSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.U2D;
 using DG.Tweening;
+using UnityEditorInternal;
 
 public class Player : MonoBehaviour
 {
@@ -54,6 +55,7 @@ public class Player : MonoBehaviour
             {
                 transform.parent = null;
                 camFollow.RotateCamera(90);
+                transform.position += (Vector3)directions[0] * 0.4f;
                 transform.RotateAround(transform.position, Vector3.forward, 90);
                 directions.Insert(0, directions[3]);
                 directions.RemoveAt(4);
@@ -62,6 +64,7 @@ public class Player : MonoBehaviour
             {
                 transform.parent = null;
                 camFollow.RotateCamera(-90);
+                transform.position += (Vector3)directions[0] * 0.4f;
                 transform.RotateAround(transform.position, Vector3.forward, -90);
                 directions.Add(directions[0]);
                 directions.RemoveAt(0);
@@ -131,7 +134,9 @@ public class Player : MonoBehaviour
         else
         {
             //Normal gravity if not on platform
+            //rb.velocity += directions[2] * gravityScale;
             rb.AddForce(directions[2] * gravityScale);
+            Debug.Log(rb.velocity);
         }
 
         //Jump trigger
@@ -154,12 +159,44 @@ public class Player : MonoBehaviour
         if (rb.bodyType != RigidbodyType2D.Dynamic) return;
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
-            transform.position += (Vector3)directions[3] * speed * Time.fixedDeltaTime;        
+            transform.position += (Vector3)directions[3] * speed * Time.fixedDeltaTime;
+            //if (directions[0] == Vector2.up)
+            //{
+            //    rb.velocity = new Vector2(-speed, rb.velocity.y);
+            //}
+            //else if (directions[0] == Vector2.down)
+            //{
+            //    rb.velocity = new Vector2(speed, rb.velocity.y);
+            //}
+            //else if (directions[0] == Vector2.left)
+            //{
+            //    rb.velocity = new Vector2(rb.velocity.x, -speed);
+            //}
+            //else if (directions[0] == Vector2.right)
+            //{
+            //    rb.velocity = new Vector2(rb.velocity.x, speed);
+            //}
             Visual.GetComponent<SpriteRenderer>().flipX = true;
         }
         else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
             transform.position += (Vector3)directions[1] * speed * Time.fixedDeltaTime;
+            //if (directions[0] == Vector2.up)
+            //{
+            //    rb.velocity = new Vector2(speed, rb.velocity.y);
+            //}
+            //else if (directions[0] == Vector2.down)
+            //{
+            //    rb.velocity = new Vector2(-speed, rb.velocity.y);
+            //}
+            //else if (directions[0] == Vector2.left)
+            //{
+            //    rb.velocity = new Vector2(rb.velocity.x, speed);
+            //}
+            //else if (directions[0] == Vector2.right)
+            //{
+            //    rb.velocity = new Vector2(rb.velocity.x, -speed);
+            //}
             Visual.GetComponent<SpriteRenderer>().flipX = false;
         }
 
@@ -176,8 +213,7 @@ public class Player : MonoBehaviour
     //Checks player on ground or not
     private bool OnGround()
     {
-        RaycastHit2D hit = Physics2D.BoxCast((Vector2)transform.position + directions[2] * 0.5f, new Vector2(1f, 0.1f),
-                                              Vector2.SignedAngle(Vector2.left, directions[1]), directions[2], 0f, LayerMask.GetMask("Obstacle"));
+        RaycastHit2D hit = Physics2D.BoxCast((Vector2)transform.position, new Vector2(0.4f, 0.1f), 0f, directions[2], 0f, LayerMask.GetMask("Obstacle"));
         if (hit.collider == null)
         {
             if (onGround)

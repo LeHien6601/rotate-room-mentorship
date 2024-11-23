@@ -9,7 +9,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - Obstacle
@@ -45,9 +45,9 @@ TagManager:
   - name: Background
     uniqueID: 1817146319
     locked: 0
-  - name: Tilemap
-    uniqueID: 1441366211
-    locked: 0
   - name: Charater
     uniqueID: 684528027
+    locked: 0
+  - name: Tilemap
+    uniqueID: 1441366211
     locked: 0

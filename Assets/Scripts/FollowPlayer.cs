@@ -16,7 +16,7 @@ public class FollowPlayer : MonoBehaviour
     private bool[] isLimit = new bool[2] { false, false };
     private void Start()
     {
-        height = Camera.main.orthographicSize * 100;
+        height = Camera.main.orthographicSize;
         width = height * Camera.main.aspect;
     }
 

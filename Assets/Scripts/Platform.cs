@@ -30,9 +30,40 @@ public class Platform : MonoBehaviour
         if (collision == null) return;
         if (collision.collider.tag == "Player")
         {
-            BoxCollider2D boxCollider = collision.collider.GetComponent<BoxCollider2D>();
-            if (collision.transform.position.y + boxCollider.offset.y - boxCollider.size.y / 2f >= transform.position.y)
-                collision.gameObject.transform.SetParent(transform);
+            BoxCollider2D collider = collision.collider.GetComponent<BoxCollider2D>();
+            Player player = collision.collider.GetComponent<Player>();
+            if (player.directions[0] == Vector2.up)
+            {
+                //if (collision.transform.position.y + collider.offset.y - collider.size.y / 2f >= transform.position.y)
+                if (collision.transform.position.y >= transform.position.y)
+                {
+                    collision.gameObject.transform.SetParent(transform);
+                    Debug.Log("Onplatform");
+                }
+            }
+            else if (player.directions[0] == Vector2.down)
+            {
+                //if (collision.transform.position.y + collider.offset.y + collider.size.y / 2f <= transform.position.y)
+                if (collision.transform.position.y <= transform.position.y)
+                {
+                    collision.gameObject.transform.SetParent(transform);
+                    Debug.Log("Onplatform");
+                }
+                else
+                {
+                    Debug.Log(collision.transform.position.y + " " + collider.offset.y + " " + collider.size.y + " " + transform.position.y);
+                }
+            }
+            else if (player.directions[0] == Vector2.left)
+            {
+                if (collision.transform.position.x + collider.offset.x + collider.size.x / 2f <= transform.position.x)
+                    collision.gameObject.transform.SetParent(transform);
+            }
+            else if (player.directions[0] == Vector2.right)
+            {
+                if (collision.transform.position.x + collider.offset.x - collider.size.x / 2f >= transform.position.x)
+                    collision.gameObject.transform.SetParent(transform);
+            }
         }
     }
 
