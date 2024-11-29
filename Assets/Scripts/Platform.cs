@@ -38,7 +38,6 @@ public class Platform : MonoBehaviour
                 if (collision.transform.position.y >= transform.position.y)
                 {
                     collision.gameObject.transform.SetParent(transform);
-                    Debug.Log("Onplatform");
                 }
             }
             else if (player.directions[0] == Vector2.down)
@@ -47,11 +46,6 @@ public class Platform : MonoBehaviour
                 if (collision.transform.position.y <= transform.position.y)
                 {
                     collision.gameObject.transform.SetParent(transform);
-                    Debug.Log("Onplatform");
-                }
-                else
-                {
-                    Debug.Log(collision.transform.position.y + " " + collider.offset.y + " " + collider.size.y + " " + transform.position.y);
                 }
             }
             else if (player.directions[0] == Vector2.left)

@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.U2D;
 using DG.Tweening;
 using UnityEditorInternal;
+using DG.Tweening.Core.Easing;
 
 public class Player : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class Player : MonoBehaviour
     private int jumpCount = 0;
     private bool jumpTrigger = false;
     [SerializeField] private Rigidbody2D rb;
-    //[SerializeField] private ParticleSystem particle;
+    [SerializeField] private ParticleSystem particle;
     [SerializeField] private SpriteRenderer sprite;
     private bool isDead = false;
     public bool onGround = false;
@@ -38,12 +39,35 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        //particle.Stop();
+        particle.Stop();
         initialColor = sprite.color;
     }
 
     private void Update()
     {
+        //Dead trigger
+        if (isDead)
+        {
+            transform.SetParent(null);
+            /*if (particle.isStopped) //Reload scence after stopping particle system duration
+            {
+                //End game!!!!!!!
+                if (SceneManager.GetActiveScene().name == "MainMenu")
+                {
+                    sprite.color = initialColor;
+                    isDead = false;
+                    rb.bodyType = RigidbodyType2D.Dynamic;
+                    return;
+                }
+                isDead = false;
+                GameManager.instance.SetLoseState();
+                GameManager.instance.ShowRestartMenu();
+            }*/
+            //Faded player
+            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, sprite.color.a / 2);
+            return;
+        }
+
         if (canShoot)
         {
             Shoot();
@@ -108,7 +132,9 @@ public class Player : MonoBehaviour
                 }
             }
         }
+
         
+
         SetWhenFalling();
     }
 
@@ -136,7 +162,6 @@ public class Player : MonoBehaviour
             //Normal gravity if not on platform
             //rb.velocity += directions[2] * gravityScale;
             rb.AddForce(directions[2] * gravityScale);
-            Debug.Log(rb.velocity);
         }
 
         //Jump trigger
@@ -379,5 +404,12 @@ public class Player : MonoBehaviour
     private void ResetCanShoot()
     {
         canShoot = true;
+    }
+
+    public void Dead()
+    {
+        rb.bodyType = RigidbodyType2D.Static;
+        particle.Play();
+        isDead = true;
     }
 }
