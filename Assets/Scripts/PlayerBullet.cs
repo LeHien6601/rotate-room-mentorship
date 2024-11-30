@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
@@ -7,11 +8,11 @@ public class PlayerBullet : MonoBehaviour
 {
     [SerializeField] private Collider2D coll;
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private SpriteRenderer sprite;
-    [SerializeField] private ParticleSystem particle;
-    private bool isExploded = false;
-    public Vector3 direction;
-    public float speed;
+    [SerializeField] protected SpriteRenderer sprite;
+    [SerializeField] protected ParticleSystem particle;
+    protected bool isExploded = false;
+    // public Vector3 direction;
+    // public float speed;
     private void Start()
     {
         particle.Stop();
@@ -32,17 +33,18 @@ public class PlayerBullet : MonoBehaviour
 
     private void FixedUpdate()
     {
-        transform.position += direction * speed * Time.deltaTime;
+        // transform.position += direction * speed * Time.deltaTime; // replaced by addforce, Dang
     }
     //Hits and explodes }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if(collision.gameObject.CompareTag("Bullet")) return;
         if (collision.gameObject.layer != LayerMask.NameToLayer("Player"))
-        {
-            if (collision != null && !isExploded)
+        {        
+            if(collision != null && !isExploded)
             {
-                speed = 0;
+                // speed = 0;
                 isExploded = true;
                 particle.Play();
             }

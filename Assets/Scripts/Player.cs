@@ -26,7 +26,6 @@ public class Player : MonoBehaviour
     private Color initialColor;
     //private float speedBoost = 10f;
     //private bool isSpeedBoost = false;
-
     [SerializeField] Animator playerAnim;
     [SerializeField] private GameObject Visual;
     private float fallIndex;
@@ -34,15 +33,16 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject bullet;
     [SerializeField] private Transform bulletPoint;
     private bool canShoot = true;
-
-
-
+    private Gun gun;
+    public int bulletCount {get; private set;}
+    public bool hasgun {get; private set;}
     private void Start()
     {
+        bulletCount = 30;
         particle.Stop();
         initialColor = sprite.color;
+        // gun = GetComponentInChildren<Gun>();
     }
-
     private void Update()
     {
         //Dead trigger
@@ -318,6 +318,10 @@ public class Player : MonoBehaviour
 
     private void Shoot()
     {
+        if(bulletCount <= 0) return;
+
+        if(!gun) return;
+
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -386,20 +390,26 @@ public class Player : MonoBehaviour
             Visual.transform.DOScale(new Vector2(0.75f, 1.5f), 0.15f);
             Visual.transform.DOScale(new Vector2(1.5f, 0.75f), 0.15f).SetDelay(0.15f);
             Visual.transform.DOScale(Vector2.one, 0.2f).SetDelay(0.3f);
-            Shooting();
+            // Shooting();
+            gun.Shoot(shootDirection);
+            canShoot = false;
+            Invoke("ResetCanShoot", 1);
             Visual.transform.DORotate(oldRotation, 0.1f).SetDelay(0.5f);
+            
+        
+            bulletCount--;
         }
     }
 
-    private void Shooting()
-    {
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 shootDirection = mousePos - transform.position;
-        GameObject createdBullet = Instantiate(bullet, bulletPoint.position, Quaternion.identity);
-        createdBullet.GetComponent<PlayerBullet>().direction = shootDirection;
-        canShoot = false;
-        Invoke("ResetCanShoot", 1);
-    }
+    // private void Shooting()
+    // {
+    //     Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    //     Vector3 shootDirection = mousePos - transform.position;
+    //     GameObject createdBullet = Instantiate(bullet, bulletPoint.position, Quaternion.identity);
+    //     // createdBullet.GetComponent<PlayerBullet>().direction = shootDirection;
+    //     canShoot = false;
+    //     Invoke("ResetCanShoot", 1);
+    // }
 
     private void ResetCanShoot()
     {
@@ -411,5 +421,18 @@ public class Player : MonoBehaviour
         rb.bodyType = RigidbodyType2D.Static;
         particle.Play();
         isDead = true;
+    }
+    public void setGun(Gun in_gun)
+    {
+        if(hasgun)
+        {
+            Destroy(gun.gameObject);
+            gun = in_gun;
+        }
+        else 
+        {
+            gun = in_gun;
+            hasgun = true;
+        }
     }
 }
