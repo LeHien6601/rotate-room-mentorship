@@ -54,3 +54,6 @@ TagManager:
   - name: Charater
     uniqueID: 684528027
     locked: 0
+  - name: Obstacle
+    uniqueID: 422419541
+    locked: 0
