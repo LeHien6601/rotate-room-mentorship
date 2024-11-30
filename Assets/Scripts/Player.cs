@@ -33,9 +33,14 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject bullet;
     [SerializeField] private Transform bulletPoint;
     private bool canShoot = true;
+
+    [SerializeField] private AudioClip jumpSoundClip;
+    [SerializeField] private AudioClip rotateSoundClip;
     private Gun gun;
     public int bulletCount {get; private set;}
     public bool hasgun {get; private set;}
+
+
     private void Start()
     {
         bulletCount = 30;
@@ -83,6 +88,8 @@ public class Player : MonoBehaviour
                 transform.RotateAround(transform.position, Vector3.forward, 90);
                 directions.Insert(0, directions[3]);
                 directions.RemoveAt(4);
+                AudioSource audioSource = GetComponent<AudioSource>();
+                audioSource.PlayOneShot(rotateSoundClip);
             }
             else if (Input.GetKeyDown(KeyCode.Q))   //Rotate counter-clockwise
             {
@@ -92,6 +99,8 @@ public class Player : MonoBehaviour
                 transform.RotateAround(transform.position, Vector3.forward, -90);
                 directions.Add(directions[0]);
                 directions.RemoveAt(0);
+                AudioSource audioSource = GetComponent<AudioSource>();
+                audioSource.PlayOneShot(rotateSoundClip);
             }
         }
         //Check if player on ground or not -> Be able to jump
@@ -178,6 +187,8 @@ public class Player : MonoBehaviour
             rb.velocity += directions[0] * jumpStrength;
             jumpCount--;
             jumpTrigger = false;
+            AudioSource audioSource = GetComponent<AudioSource>();
+            audioSource.PlayOneShot(jumpSoundClip);
         }
 
         //Player moves Left/Right
