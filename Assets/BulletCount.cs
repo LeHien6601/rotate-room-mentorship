@@ -18,7 +18,7 @@ public class BulletCount : MonoBehaviour
     {
         if(!player.gameObject.GetComponentInChildren<Gun>()) return;
 
-        string str = "Bullets: " + player.bulletCount;
+        string str = "Bullets: " + player.gameObject.GetComponentInChildren<Gun>().bulletCount;
         str += "\nGun: ";
         str += player.gameObject.GetComponentInChildren<Gun>().GunStyle;
         text.text = str;

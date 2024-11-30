@@ -7,15 +7,9 @@ public abstract class Gun : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] protected GameObject bullet;
     [SerializeField] protected float power;
+    [SerializeField] public int bulletCount {get; protected set;}
     public string GunStyle {get; protected set;}
     public abstract void Shoot(Vector3 direction);
-    void Update()
-    {
-        if(transform.parent != null)
-        {
-            return;
-        }
-    }
     void OnTriggerEnter2D(Collider2D collision)
     {
         if(!collision.gameObject.CompareTag("Player")) return;

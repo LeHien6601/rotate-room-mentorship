@@ -36,8 +36,4 @@ public class Canon : MonoBehaviour
         AudioSource audioSource = GetComponent<AudioSource>();
         audioSource.PlayOneShot(canonSoundClip);
     }
-
-    private void OnDrawGizmos()
-    {
-    }
 }

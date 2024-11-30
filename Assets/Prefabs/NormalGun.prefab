@@ -144,4 +144,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 1313314574275492515, guid: 491edd4c0ebd29041844d969b412989d, type: 3}
-  power: 1000
+  power: 300

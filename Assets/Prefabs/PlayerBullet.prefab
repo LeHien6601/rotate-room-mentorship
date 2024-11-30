@@ -75,7 +75,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 684528027
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -139,8 +139,6 @@ MonoBehaviour:
   rb: {fileID: 4889185650506615633}
   sprite: {fileID: 8202732465117955212}
   particle: {fileID: 540903723912452514}
-  direction: {x: 1, y: 0, z: 0}
-  speed: 3
 --- !u!50 &4889185650506615633
 Rigidbody2D:
   serializedVersion: 4
@@ -167,7 +165,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!1 &3237623975851874159
 GameObject:
   m_ObjectHideFlags: 0
@@ -5022,7 +5020,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 684528027
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_RenderMode: 0
   m_MeshDistribution: 0

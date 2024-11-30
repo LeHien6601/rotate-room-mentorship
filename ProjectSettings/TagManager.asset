@@ -7,6 +7,7 @@ TagManager:
   - Platform
   - Bullet
   - Wall
+  - Cannons
   layers:
   - Default
   - TransparentFX

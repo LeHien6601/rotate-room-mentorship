@@ -37,13 +37,11 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioClip jumpSoundClip;
     [SerializeField] private AudioClip rotateSoundClip;
     private Gun gun;
-    public int bulletCount {get; private set;}
     public bool hasgun {get; private set;}
 
 
     private void Start()
     {
-        bulletCount = 30;
         particle.Stop();
         initialColor = sprite.color;
         // gun = GetComponentInChildren<Gun>();
@@ -329,8 +327,6 @@ public class Player : MonoBehaviour
 
     private void Shoot()
     {
-        if(bulletCount <= 0) return;
-
         if(!gun) return;
 
         if (Input.GetMouseButtonDown(0))
@@ -406,9 +402,6 @@ public class Player : MonoBehaviour
             canShoot = false;
             Invoke("ResetCanShoot", 1);
             Visual.transform.DORotate(oldRotation, 0.1f).SetDelay(0.5f);
-            
-        
-            bulletCount--;
         }
     }
 
