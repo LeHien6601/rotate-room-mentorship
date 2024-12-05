@@ -5,7 +5,6 @@ using static UnityEngine.ParticleSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.U2D;
 using DG.Tweening;
-using UnityEditorInternal;
 using DG.Tweening.Core.Easing;
 
 public class Player : MonoBehaviour
@@ -106,7 +105,7 @@ public class Player : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) && jumpCount > 0)
         {
             jumpTrigger = true;
-            
+            Debug.Log("jump");
         }
 
         if (onGround == true)
@@ -168,7 +167,10 @@ public class Player : MonoBehaviour
         {
             //Normal gravity if not on platform
             //rb.velocity += directions[2] * gravityScale;
-            rb.AddForce(directions[2] * gravityScale);
+            if (rb.bodyType == RigidbodyType2D.Dynamic)
+            {
+                rb.AddForce(directions[2] * gravityScale);
+            }
         }
 
         //Jump trigger
@@ -260,11 +262,14 @@ public class Player : MonoBehaviour
         }
         if (directions[0] == Vector2.up || directions[0] == Vector2.down)
         {
-            if (rb.velocity.y == 0f) jumpCount = 1;
+            if (rb.velocity.y == 0f || true)
+            {
+                jumpCount = 1;
+            }
         }
         else
         {
-            if (rb.velocity.x == 0f) jumpCount = 1;
+            if (rb.velocity.x == 0f || true) jumpCount = 1;
         }
         onGround = true;
         return true;
