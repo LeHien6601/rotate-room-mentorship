@@ -168,7 +168,10 @@ public class Player : MonoBehaviour
         {
             //Normal gravity if not on platform
             //rb.velocity += directions[2] * gravityScale;
-            rb.AddForce(directions[2] * gravityScale);
+            if (rb.bodyType == RigidbodyType2D.Dynamic)
+            {
+                rb.AddForce(directions[2] * gravityScale);
+            }
         }
 
         //Jump trigger
