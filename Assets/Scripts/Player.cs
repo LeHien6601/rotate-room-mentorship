@@ -106,7 +106,7 @@ public class Player : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) && jumpCount > 0)
         {
             jumpTrigger = true;
-            
+            Debug.Log("jump");
         }
 
         if (onGround == true)
@@ -259,11 +259,14 @@ public class Player : MonoBehaviour
         }
         if (directions[0] == Vector2.up || directions[0] == Vector2.down)
         {
-            if (rb.velocity.y == 0f) jumpCount = 1;
+            if (rb.velocity.y == 0f || true)
+            {
+                jumpCount = 1;
+            }
         }
         else
         {
-            if (rb.velocity.x == 0f) jumpCount = 1;
+            if (rb.velocity.x == 0f || true) jumpCount = 1;
         }
         onGround = true;
         return true;

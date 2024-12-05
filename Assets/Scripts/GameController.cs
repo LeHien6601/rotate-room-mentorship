@@ -15,16 +15,19 @@ public class GameController : MonoBehaviour
         menu.GetComponent<Button>().onClick.AddListener(clickMenu);
         exit.GetComponent<Button>().onClick.AddListener(clickExit);
         settings.transform.localScale = Vector3.zero;
+        Debug.Log("Add listener");
     }
 
-    private void clickMenu()
+    public void clickMenu()
     {
+        Debug.Log("Menu");
         Time.timeScale = 0;
         settings.transform.DOScale(1f, 0.5f).SetUpdate(true);
     }
 
-    private void clickExit()
+    public void clickExit()
     {
+        Debug.Log("Exit");
         Time.timeScale = 1;
         settings.transform.DOScale(0f, 0.5f);
     }

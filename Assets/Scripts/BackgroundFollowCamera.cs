@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BackgroundFollowCamera : MonoBehaviour
 {
-    [SerializeField] Camera cam;
+    [SerializeField] public Camera cam;
     private float initialCamXPos;
     private float initialXPos;
     [SerializeField] float speed;
