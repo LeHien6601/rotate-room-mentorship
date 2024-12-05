@@ -49,6 +49,7 @@ public class FinishGate : MonoBehaviour
             circleCollider.isTrigger = false;
             Time.timeScale = 1f;
             //Finish game!!!!!!
+            GameController.instance.LoadLevel(1);
         }
         else
         {

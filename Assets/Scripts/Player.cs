@@ -5,7 +5,6 @@ using static UnityEngine.ParticleSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.U2D;
 using DG.Tweening;
-using UnityEditorInternal;
 using DG.Tweening.Core.Easing;
 
 public class Player : MonoBehaviour
