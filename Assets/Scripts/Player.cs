@@ -182,6 +182,7 @@ public class Player : MonoBehaviour
             {
                 offGroundTimer -= Time.deltaTime;
             }
+            
             rb.velocity += directions[0] * jumpStrength;
             jumpCount--;
             jumpTrigger = false;

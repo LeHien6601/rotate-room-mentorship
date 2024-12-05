@@ -51,9 +51,9 @@ TagManager:
   - name: Tilemap
     uniqueID: 1441366211
     locked: 0
-  - name: Charater
-    uniqueID: 684528027
-    locked: 0
   - name: Obstacle
     uniqueID: 422419541
+    locked: 0
+  - name: Charater
+    uniqueID: 684528027
     locked: 0
