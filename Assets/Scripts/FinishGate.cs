@@ -1,3 +1,4 @@
+using DG.Tweening;
 using DG.Tweening.Core.Easing;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,8 +11,8 @@ public class FinishGate : MonoBehaviour
     [SerializeField] private CircleCollider2D circleCollider;
     [SerializeField] private float timer = 0f;
     [SerializeField] private float duration = 1f;
+    [SerializeField] int levelToLoad;
     private bool expand = true;
-
     private void Update()
     {
         if (timer > duration)
