@@ -15,6 +15,8 @@ public class CanonFollow : MonoBehaviour
     {
         gameObject.GetComponent<Canon>().canFire = false;
         player = GameObject.FindGameObjectWithTag("Player");
+        SFXVolumeSetting.instance.AddAudioSource(GetComponent<AudioSource>());
+        SFXVolumeSetting.instance.UpdateVolume();
     }
 
     // Update is called once per frame

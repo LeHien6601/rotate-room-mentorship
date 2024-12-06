@@ -13,6 +13,8 @@ public class Canon : MonoBehaviour
     private void Start()
     {
         particle.Stop();
+        SFXVolumeSetting.instance.AddAudioSource(GetComponent<AudioSource>()); 
+        SFXVolumeSetting.instance.UpdateVolume();
     }
     private void Update()
     {

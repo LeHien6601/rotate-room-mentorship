@@ -43,28 +43,23 @@ public class Player : MonoBehaviour
     {
         particle.Stop();
         initialColor = sprite.color;
+        SFXVolumeSetting.instance.AddAudioSource(GetComponent<AudioSource>());
+        SFXVolumeSetting.instance.UpdateVolume();
         // gun = GetComponentInChildren<Gun>();
     }
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.L)) GameController.instance.loseGame();
+        if (Input.GetKeyDown(KeyCode.N)) GameController.instance.LoadNextLevel();
         //Dead trigger
         if (isDead)
         {
             transform.SetParent(null);
-            /*if (particle.isStopped) //Reload scence after stopping particle system duration
+            if (particle.isStopped) //Reload scence after stopping particle system duration
             {
-                //End game!!!!!!!
-                if (SceneManager.GetActiveScene().name == "MainMenu")
-                {
-                    sprite.color = initialColor;
-                    isDead = false;
-                    rb.bodyType = RigidbodyType2D.Dynamic;
-                    return;
-                }
-                isDead = false;
-                GameManager.instance.SetLoseState();
-                GameManager.instance.ShowRestartMenu();
-            }*/
+                this.gameObject.SetActive(false);
+                GameController.instance.loseGame();
+            }
             //Faded player
             sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, sprite.color.a / 2);
             return;
@@ -146,7 +141,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-       // playerAnim.SetBool("jump", true);
+        // playerAnim.SetBool("jump", true);
         if (rb.bodyType != RigidbodyType2D.Dynamic) return;
 
         //Check if player on platform or not
