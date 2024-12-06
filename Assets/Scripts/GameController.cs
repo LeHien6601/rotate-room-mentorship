@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject menu;
     [SerializeField] private GameObject settings;
     [SerializeField] private GameObject exit;
+    [SerializeField] UI ui_script;
     [SerializeField] private GameObject player;
     public static GameController instance;
 
@@ -31,15 +32,18 @@ public class GameController : MonoBehaviour
         exit.GetComponent<Button>().onClick.AddListener(clickExit);
         settings.transform.localScale = Vector3.zero;
         // Debug.Log("Add listener");
-    }
+        ui_script = GameObject.FindGameObjectWithTag("UI").GetComponent<UI>();
 
+        menu = ui_script.Menu;
+        settings = ui_script.Settings;
+        exit = ui_script.Exit;
+    }
     public void clickMenu()
     {
         // Debug.Log("Menu");
         Time.timeScale = 0;
         settings.transform.DOScale(1f, 0.5f).SetUpdate(true);
     }
-
     public void clickExit()
     {
         // Debug.Log("Exit");
@@ -52,7 +56,6 @@ public class GameController : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene("Demo " + i);
     }
-
     public void FinishGame(int levelToLoad)
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -62,7 +65,6 @@ public class GameController : MonoBehaviour
         spr.DOFade(0, 0.1f);  
         StartCoroutine(LoadAfterWait(0.1f, levelToLoad));
     }
-
     IEnumerator LoadAfterWait(float seconds, int level)
     {
         yield return new WaitForSeconds(seconds);

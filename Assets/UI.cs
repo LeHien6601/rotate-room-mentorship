@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class UI : MonoBehaviour
 {
-    [SerializeField] GameObject Menu;
-    [SerializeField] GameObject Settings;
-    [SerializeField] GameObject Exit;
+    public GameObject Menu{get; private set;}
+    public GameObject Settings{get; private set;}
+    public GameObject Exit{get; private set;}
     // Start is called before the first frame update
     void Start()
     {
         
     }
-
     // Update is called once per frame
     void Update()
     {

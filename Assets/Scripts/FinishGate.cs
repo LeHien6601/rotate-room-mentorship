@@ -13,7 +13,6 @@ public class FinishGate : MonoBehaviour
     [SerializeField] private float duration = 1f;
     [SerializeField] int levelToLoad;
     private bool expand = true;
-
     private void Update()
     {
         if (timer > duration)
