@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -10,10 +9,11 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject menu;
     [SerializeField] private GameObject settings;
     [SerializeField] private GameObject exit;
-    [SerializeField] UI ui_script;
+    [SerializeField] private UI ui_script;
     [SerializeField] private GameObject player;
+    [SerializeField] private uint KeysNeededToContinue = 0;
+    [SerializeField] private GameObject finishGate;
     public static GameController instance;
-
     private void Awake()
     {
         if (instance == null)
@@ -28,15 +28,31 @@ public class GameController : MonoBehaviour
     }
     void Start()
     {
-        menu.GetComponent<Button>().onClick.AddListener(clickMenu);
-        exit.GetComponent<Button>().onClick.AddListener(clickExit);
-        settings.transform.localScale = Vector3.zero;
-        // Debug.Log("Add listener");
         ui_script = GameObject.FindGameObjectWithTag("UI").GetComponent<UI>();
-
+        finishGate = GameObject.FindGameObjectWithTag("Finish");
         menu = ui_script.Menu;
         settings = ui_script.Settings;
         exit = ui_script.Exit;
+        // Debug.Log("Add listener");
+        SubscribeToUI();
+        CheckGate();
+    }
+    void CheckGate()
+    {
+        if(KeysNeededToContinue != 0) 
+        {
+            finishGate.SetActive(false);
+        }
+        else
+        {
+            finishGate.SetActive(true);
+        }
+    }
+    void SubscribeToUI()
+    {
+        menu.GetComponent<Button>().onClick.AddListener(clickMenu);
+        exit.GetComponent<Button>().onClick.AddListener(clickExit);
+        settings.transform.localScale = Vector3.zero;
     }
     public void clickMenu()
     {
@@ -64,6 +80,11 @@ public class GameController : MonoBehaviour
         SpriteRenderer spr = player.GetComponent<SpriteRenderer>();
         spr.DOFade(0, 0.1f);  
         StartCoroutine(LoadAfterWait(0.1f, levelToLoad));
+    }
+    public void ReduceKeys()
+    {
+        KeysNeededToContinue--;     
+        CheckGate();   
     }
     IEnumerator LoadAfterWait(float seconds, int level)
     {
