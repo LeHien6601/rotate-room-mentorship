@@ -69,7 +69,6 @@ public class Player : MonoBehaviour
             sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, sprite.color.a / 2);
             return;
         }
-
         if (canShoot)
         {
             Shoot();
@@ -105,7 +104,7 @@ public class Player : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) && jumpCount > 0)
         {
             jumpTrigger = true;
-            Debug.Log("jump");
+            // Debug.Log("jump");
         }
 
         if (onGround == true)
@@ -304,6 +303,7 @@ public class Player : MonoBehaviour
             rb.velocity /= 2;
             transform.position += Vector3.ClampMagnitude(direction, attraction);
         }
+        Debug.Log("in player finish");
     }
 
     private void SetWhenFalling()
