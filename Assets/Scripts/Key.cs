@@ -20,7 +20,7 @@ public class Key : MonoBehaviour
     {
         if(!other.gameObject.CompareTag("Player")) return;
 
-        GameController.instance.ReduceKeys();
+        GameController.instance.AddKeys();
         Destroy(gameObject);
     }
 }

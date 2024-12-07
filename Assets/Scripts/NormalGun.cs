@@ -4,7 +4,7 @@ public class NormalGun : Gun
     // Start is called before the first frame upd
     void Start()
     {
-        GunStyle = "NormalGun";
+        GunStyle = bullet.name;
         bulletCount = 15;
     }
 	public override void Shoot(Vector3 direction)

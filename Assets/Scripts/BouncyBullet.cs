@@ -7,10 +7,11 @@ public class BouncyBullet : PlayerBullet
 {
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision != null && !isExploded && collision.gameObject.CompareTag("Cannons"))
+        if(collision != null && !isExploded)
         {
             // speed = 0;
-            Destroy(collision.gameObject);
+            Debug.Log("hit cannons");
+            if(collision.gameObject.CompareTag("Cannons")) Destroy(collision.gameObject);
             isExploded = true;
             particle.Play();
         }

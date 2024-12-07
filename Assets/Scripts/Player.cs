@@ -37,8 +37,6 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioClip rotateSoundClip;
     private Gun gun;
     public bool hasgun {get; private set;}
-
-
     private void Start()
     {
         particle.Stop();
@@ -268,7 +266,6 @@ public class Player : MonoBehaviour
         onGround = true;
         return true;
     }
-
     private GameObject OnPlatform()
     {
         if (transform.parent != null && transform.parent.tag == "Platform") return transform.parent.gameObject;
@@ -298,9 +295,7 @@ public class Player : MonoBehaviour
             rb.velocity /= 2;
             transform.position += Vector3.ClampMagnitude(direction, attraction);
         }
-        Debug.Log("in player finish");
     }
-
     private void SetWhenFalling()
     {
         if (directions[2] == Vector2.down)
@@ -415,7 +410,6 @@ public class Player : MonoBehaviour
     //     canShoot = false;
     //     Invoke("ResetCanShoot", 1);
     // }
-
     private void ResetCanShoot()
     {
         canShoot = true;
@@ -439,5 +433,9 @@ public class Player : MonoBehaviour
             gun = in_gun;
             hasgun = true;
         }
+    }
+    public Animator GetAnimator()
+    {
+        return playerAnim;
     }
 }

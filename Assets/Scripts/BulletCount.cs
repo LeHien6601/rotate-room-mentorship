@@ -12,10 +12,10 @@ public class BulletCount : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
-
     // Update is called once per frame
     void Update()
     {
+        if(!player) return;
         if(!player.gameObject.GetComponentInChildren<Gun>()) return;
 
         string str = "Bullets: " + player.gameObject.GetComponentInChildren<Gun>().bulletCount;

@@ -524,12 +524,16 @@ PrefabInstance:
       objectReference: {fileID: 545214424}
     - target: {fileID: 4764218175287034859, guid: 2f65c953bb0635c4cb5d1bf0ebb2c9b2, type: 3}
       propertyPath: maxLevel
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4764218175287034859, guid: 2f65c953bb0635c4cb5d1bf0ebb2c9b2, type: 3}
       propertyPath: settings
       value: 
       objectReference: {fileID: 545214423}
+    - target: {fileID: 4764218175287034859, guid: 2f65c953bb0635c4cb5d1bf0ebb2c9b2, type: 3}
+      propertyPath: KeysNeededToContinue
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4847196601316228548, guid: 2f65c953bb0635c4cb5d1bf0ebb2c9b2, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

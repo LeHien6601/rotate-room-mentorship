@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using System.Net.Http.Headers;
+using System;
 
 public class GameController : MonoBehaviour
 {
@@ -12,11 +14,12 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject lose;
     [SerializeField] private GameObject restart;
     [SerializeField] private int maxLevel;
-    private int currentLevel = 0;
+    [SerializeField] private int currentLevel = 0;
     private bool isLose = false;
     [SerializeField] private UI ui_script;
     [SerializeField] private GameObject player;
-    [SerializeField] private uint KeysNeededToContinue = 0;
+    [SerializeField] private uint KeysNeededToContinue = 5;
+    [SerializeField] private uint KeysCollected = 0;
     [SerializeField] private GameObject finishGate;
     public static GameController instance;
     private void Awake()
@@ -33,18 +36,12 @@ public class GameController : MonoBehaviour
     }
     void Start()
     {
-        ui_script = GameObject.FindGameObjectWithTag("UI").GetComponent<UI>();
-        finishGate = GameObject.FindGameObjectWithTag("Finish");
-        menu = ui_script.Menu;
-        settings = ui_script.Settings;
-        exit = ui_script.Exit;
-        // Debug.Log("Add listener");
-        SubscribeToUI();
-        CheckGate();
+        getOjects();
     }
     void CheckGate()
     {
-        if(KeysNeededToContinue != 0) 
+        if(!finishGate) getOjects();
+        if(KeysCollected != KeysNeededToContinue) 
         {
             finishGate.SetActive(false);
         }
@@ -64,6 +61,7 @@ public class GameController : MonoBehaviour
     }
     private void Update()
     {
+        CheckGate();
         if (isLose)
         {
             if (Input.GetKeyDown(KeyCode.R))
@@ -74,18 +72,21 @@ public class GameController : MonoBehaviour
     }
     public void loseGame()
     {
+        if(!lose) getOjects();
         isLose = true;
         Debug.Log("lose");
         lose.transform.DOScale(1f, 0.5f).SetUpdate(true);
     }
     public void clickMenu()
     {
+        if(!settings) getOjects();
         // Debug.Log("Menu");
         Time.timeScale = 0;
         settings.transform.DOScale(1f, 0.5f).SetUpdate(true);
     }
     public void clickExit()
     {
+        if(!settings) getOjects();
         // Debug.Log("Exit");
         Time.timeScale = 1;
         settings.transform.DOScale(0f, 0.5f);
@@ -103,6 +104,12 @@ public class GameController : MonoBehaviour
         SFXVolumeSetting.instance.ClearAudioSource();
         SceneManager.LoadScene(currentLevel);
     }
+    public void LoadLevel(int level)
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(level);
+        KeysCollected = 0;
+    }
     private void ReloadCurrentLevel()
     {
         Time.timeScale = 1f;
@@ -119,9 +126,9 @@ public class GameController : MonoBehaviour
         spr.DOFade(0, 0.1f);  
         StartCoroutine(LoadAfterWait(0.1f, levelToLoad));
     }
-    public void ReduceKeys()
+    public void AddKeys()
     {
-        KeysNeededToContinue--;     
+        KeysCollected++;     
         CheckGate();   
     }
     IEnumerator LoadAfterWait(float seconds, int level)
@@ -129,5 +136,16 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(seconds);
         LoadLevel(level);
         yield return null;
+    }
+    void getOjects()
+    {
+        ui_script = GameObject.FindGameObjectWithTag("UI").GetComponent<UI>();
+        finishGate = GameObject.FindGameObjectWithTag("Finish");
+        menu = ui_script.Menu;
+        settings = ui_script.Settings;
+        exit = ui_script.Exit;
+        // Debug.Log("Add listener");
+        SubscribeToUI();
+        CheckGate();
     }
 }
