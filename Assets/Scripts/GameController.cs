@@ -3,8 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
-using System.Net.Http.Headers;
-using System;
+using UnityEngine.Device;
 
 public class GameController : MonoBehaviour
 {
@@ -147,5 +146,10 @@ public class GameController : MonoBehaviour
         // Debug.Log("Add listener");
         SubscribeToUI();
         CheckGate();
+    }
+    public void ExitToWindows()
+    {
+        UnityEngine.Application.Quit();
+        Debug.Log("exit to windows");
     }
 }

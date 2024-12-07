@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
-using UnityEditor.Callbacks;
 using UnityEngine;
 
 public class FinishGate : MonoBehaviour

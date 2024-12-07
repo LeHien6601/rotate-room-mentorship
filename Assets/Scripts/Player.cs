@@ -1,11 +1,7 @@
-﻿using System.Collections;
+﻿
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.ParticleSystem;
-using UnityEngine.SceneManagement;
-using UnityEngine.U2D;
 using DG.Tweening;
-using DG.Tweening.Core.Easing;
 
 public class Player : MonoBehaviour
 {
