@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject exit;
     [SerializeField] private GameObject lose;
     [SerializeField] private GameObject restart;
+    [SerializeField] private GameObject winscreen;
     [SerializeField] private int maxLevel;
     [SerializeField] private int currentLevel = 0;
     private bool isLose = false;
@@ -56,6 +57,7 @@ public class GameController : MonoBehaviour
         restart.GetComponent<Button>().onClick.AddListener(clickRestart);
         settings.transform.localScale = Vector3.zero;
         lose.transform.localScale = Vector3.zero;
+        winscreen.transform.localScale = Vector3.zero;
         Debug.Log("Add listener");
     }
     private void Update()
@@ -143,6 +145,7 @@ public class GameController : MonoBehaviour
         menu = ui_script.Menu;
         settings = ui_script.Settings;
         exit = ui_script.Exit;
+        winscreen = ui_script.WinScreen;
         // Debug.Log("Add listener");
         SubscribeToUI();
         CheckGate();
@@ -151,5 +154,9 @@ public class GameController : MonoBehaviour
     {
         UnityEngine.Application.Quit();
         Debug.Log("exit to windows");
+    }
+    public void WinScreen()
+    {
+        winscreen.transform.DOScale(1f, 0.5f);
     }
 }

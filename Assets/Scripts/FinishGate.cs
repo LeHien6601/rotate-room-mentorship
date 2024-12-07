@@ -56,7 +56,7 @@ public class FinishGate : MonoBehaviour
     IEnumerator finish()
     {
         yield return new WaitForSeconds(4.5f);
-        GameController.instance.LoadNextLevel();
+        GameController.instance.WinScreen();
     }
     // private void OnTriggerStay2D(Collider2D collision)
     // {

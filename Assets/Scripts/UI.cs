@@ -7,6 +7,7 @@ public class UI : MonoBehaviour
     [SerializeField] GameObject menu;
     [SerializeField] GameObject settings;
     [SerializeField] GameObject exit;
+    [SerializeField] GameObject winscreen;
     public GameObject Menu{
         get{return menu;} set{}
     }
@@ -15,6 +16,9 @@ public class UI : MonoBehaviour
     }
     public GameObject Exit{
         get{return exit;} set{}
+    }
+    public GameObject WinScreen{
+        get{return winscreen;} set{}
     }
     // Start is called before the first frame update
     void Start()
