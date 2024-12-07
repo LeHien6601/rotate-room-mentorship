@@ -69,6 +69,7 @@ public class GameController : MonoBehaviour
     }
     private void Update()
     {
+        if(currentLevel == 3) KeysNeededToContinue = 5;
         CheckGate();
         if (isLose)
         {
