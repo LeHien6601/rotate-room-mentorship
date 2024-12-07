@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
 using UnityEngine.Device;
+using TMPro;
 
 public class GameController : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private uint KeysNeededToContinue = 5;
     [SerializeField] private uint KeysCollected = 0;
     [SerializeField] private GameObject finishGate;
+    [SerializeField] float timeElapsed = 0f;
     public static GameController instance;
     private void Awake()
     {
@@ -37,6 +39,11 @@ public class GameController : MonoBehaviour
     void Start()
     {
         getOjects();
+        timeElapsed = 0;
+    }
+    void FixedUpdate()
+    {
+        timeElapsed += 0.2f;
     }
     void CheckGate()
     {
@@ -104,6 +111,7 @@ public class GameController : MonoBehaviour
         currentLevel = (currentLevel + 1) % maxLevel;
         SFXVolumeSetting.instance.ClearAudioSource();
         SceneManager.LoadScene(currentLevel);
+        timeElapsed = 0f;
     }
     public void LoadLevel(int level)
     {
@@ -117,6 +125,7 @@ public class GameController : MonoBehaviour
         isLose = false;
         SFXVolumeSetting.instance.ClearAudioSource();
         SceneManager.LoadScene(currentLevel);
+        timeElapsed = 0f;
     }
     public void FinishGame(int levelToLoad)
     {
@@ -158,5 +167,24 @@ public class GameController : MonoBehaviour
     public void WinScreen()
     {
         winscreen.transform.DOScale(1f, 0.5f);
+        string[] victorytext = {"You win!", "Great Jumps!", "Good shot!"};
+        TMP_Text[] arr = winscreen.GetComponentsInChildren<TMP_Text>();
+        // TMP_Text win_text;
+        foreach(TMP_Text text in arr)
+        {
+            Debug.Log(text.name);
+            if(text.gameObject.name == "You Win")
+            {
+                text.text = victorytext[Random.Range(0, victorytext.Length)];
+            }
+
+            if(text.name == "Text")
+            {
+                string ans = "Stars: " + KeysCollected;
+                ans += '\n';
+                ans += "Time: " + (int)timeElapsed;
+                text.text = ans;
+            }
+        }
     }
 }
