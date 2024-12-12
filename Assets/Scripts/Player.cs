@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
+        if (!camFollow.playing) return;
         if (Input.GetKeyDown(KeyCode.L)) GameController.instance.loseGame();
         if (Input.GetKeyDown(KeyCode.N)) GameController.instance.LoadNextLevel();
         //Dead trigger
@@ -134,6 +135,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!camFollow.playing) return;
         // playerAnim.SetBool("jump", true);
         if (rb.bodyType != RigidbodyType2D.Dynamic) return;
 
