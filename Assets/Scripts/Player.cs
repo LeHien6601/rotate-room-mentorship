@@ -187,43 +187,11 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             transform.position += (Vector3)directions[3] * speed * Time.fixedDeltaTime;
-            //if (directions[0] == Vector2.up)
-            //{
-            //    rb.velocity = new Vector2(-speed, rb.velocity.y);
-            //}
-            //else if (directions[0] == Vector2.down)
-            //{
-            //    rb.velocity = new Vector2(speed, rb.velocity.y);
-            //}
-            //else if (directions[0] == Vector2.left)
-            //{
-            //    rb.velocity = new Vector2(rb.velocity.x, -speed);
-            //}
-            //else if (directions[0] == Vector2.right)
-            //{
-            //    rb.velocity = new Vector2(rb.velocity.x, speed);
-            //}
             Visual.GetComponent<SpriteRenderer>().flipX = true;
         }
         else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
             transform.position += (Vector3)directions[1] * speed * Time.fixedDeltaTime;
-            //if (directions[0] == Vector2.up)
-            //{
-            //    rb.velocity = new Vector2(speed, rb.velocity.y);
-            //}
-            //else if (directions[0] == Vector2.down)
-            //{
-            //    rb.velocity = new Vector2(-speed, rb.velocity.y);
-            //}
-            //else if (directions[0] == Vector2.left)
-            //{
-            //    rb.velocity = new Vector2(rb.velocity.x, speed);
-            //}
-            //else if (directions[0] == Vector2.right)
-            //{
-            //    rb.velocity = new Vector2(rb.velocity.x, -speed);
-            //}
             Visual.GetComponent<SpriteRenderer>().flipX = false;
         }
 
@@ -240,7 +208,8 @@ public class Player : MonoBehaviour
     //Checks player on ground or not
     private bool OnGround()
     {
-        RaycastHit2D hit = Physics2D.BoxCast((Vector2)transform.position, new Vector2(0.4f, 0.1f), 0f, directions[2], 0f, LayerMask.GetMask("Obstacle"));
+        RaycastHit2D hit = Physics2D.BoxCast((Vector2)transform.position, new Vector2(1f, 0.1f),
+                                              Vector2.SignedAngle(Vector2.left, directions[1]), directions[2], 0f, LayerMask.GetMask("Obstacle"));
         if (hit.collider == null)
         {
             if (onGround)
@@ -267,9 +236,12 @@ public class Player : MonoBehaviour
     private GameObject OnPlatform()
     {
         if (transform.parent != null && transform.parent.tag == "Platform") return transform.parent.gameObject;
-        RaycastHit2D hit = Physics2D.BoxCast((Vector2)transform.position + directions[2] * 0.5f, new Vector2(1f, 0.1f),
+        RaycastHit2D hit = Physics2D.BoxCast((Vector2)transform.position, new Vector2(1f, 0.1f),
                                               Vector2.SignedAngle(Vector2.left, directions[1]), directions[2], 0f, LayerMask.GetMask("Obstacle"));
-        if (hit.collider == null) return null;
+        if (hit.collider == null)
+        {
+            return null;
+        }
         if (hit.collider.tag == "Platform")
         {
             float diff = Mathf.Abs(hit.transform.eulerAngles.z - transform.eulerAngles.z);
@@ -398,16 +370,6 @@ public class Player : MonoBehaviour
             Visual.transform.DORotate(oldRotation, 0.1f).SetDelay(0.5f);
         }
     }
-
-    // private void Shooting()
-    // {
-    //     Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    //     Vector3 shootDirection = mousePos - transform.position;
-    //     GameObject createdBullet = Instantiate(bullet, bulletPoint.position, Quaternion.identity);
-    //     // createdBullet.GetComponent<PlayerBullet>().direction = shootDirection;
-    //     canShoot = false;
-    //     Invoke("ResetCanShoot", 1);
-    // }
     private void ResetCanShoot()
     {
         canShoot = true;

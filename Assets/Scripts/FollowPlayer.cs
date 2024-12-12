@@ -100,7 +100,7 @@ public class FollowPlayer : MonoBehaviour
     private void CameraFollow()
     {
         Vector2 newCamPos = Vector2.Lerp(transform.position, player.transform.position,
-              Mathf.Min(Vector2.Distance(transform.position, player.transform.position), followSpeed * Time.deltaTime));
+              Mathf.Min(Vector2.Distance(transform.position, player.transform.position), followSpeed * Time.unscaledDeltaTime));
         if (isLimit[0] && isLimit[1])
         {
             //Debug.Log("Limit all");
