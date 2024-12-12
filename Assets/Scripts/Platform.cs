@@ -34,7 +34,6 @@ public class Platform : MonoBehaviour
             Player player = collision.collider.GetComponent<Player>();
             if (player.directions[0] == Vector2.up)
             {
-                //if (collision.transform.position.y + collider.offset.y - collider.size.y / 2f >= transform.position.y)
                 if (collision.transform.position.y >= transform.position.y)
                 {
                     collision.gameObject.transform.SetParent(transform);
@@ -42,7 +41,6 @@ public class Platform : MonoBehaviour
             }
             else if (player.directions[0] == Vector2.down)
             {
-                //if (collision.transform.position.y + collider.offset.y + collider.size.y / 2f <= transform.position.y)
                 if (collision.transform.position.y <= transform.position.y)
                 {
                     collision.gameObject.transform.SetParent(transform);
@@ -50,12 +48,12 @@ public class Platform : MonoBehaviour
             }
             else if (player.directions[0] == Vector2.left)
             {
-                if (collision.transform.position.x + collider.offset.x + collider.size.x / 2f <= transform.position.x)
+                if (collision.transform.position.x <= transform.position.x)
                     collision.gameObject.transform.SetParent(transform);
             }
             else if (player.directions[0] == Vector2.right)
             {
-                if (collision.transform.position.x + collider.offset.x - collider.size.x / 2f >= transform.position.x)
+                if (collision.transform.position.x >= transform.position.x)
                     collision.gameObject.transform.SetParent(transform);
             }
         }
