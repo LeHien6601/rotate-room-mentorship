@@ -134,7 +134,6 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // playerAnim.SetBool("jump", true);
         if (rb.bodyType != RigidbodyType2D.Dynamic) return;
 
         //Check if player on platform or not
