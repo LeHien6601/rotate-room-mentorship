@@ -18,17 +18,18 @@ public class Canon : MonoBehaviour
     }
     private void Update()
     {
-            timer += Time.deltaTime;
-            if (timer >= delayTime)
-            {
-                if (canFire)
-                {
-                    Fire();
-                    timer = 0f;
-                }
-            }
-    }
+        if(GameController.instance.gameIsPaused()) return;
 
+        timer += Time.deltaTime;
+        if (timer >= delayTime)
+        {
+            if (canFire)
+            {
+                Fire();
+                timer = 0f;
+            }
+        }
+    }
     void Fire()
     {
         particle.Play();

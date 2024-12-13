@@ -3,8 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
-using UnityEngine.Device;
 using TMPro;
+using JetBrains.Annotations;
 
 public class GameController : MonoBehaviour
 {
@@ -26,7 +26,8 @@ public class GameController : MonoBehaviour
     public static GameController instance;
     private AudioSource audioSource;
     [SerializeField] private AudioClip winSoundClip;
-    [SerializeField] private AudioClip loseSoundClip;
+    [SerializeField] private AudioClip loseSoundClip;    
+    bool firstTime = false;
     private void Awake()
     {
         if (instance == null)
@@ -145,7 +146,7 @@ public class GameController : MonoBehaviour
     }
     public void AddKeys()
     {
-        KeysCollected++;     
+        KeysCollected++;
         CheckGate();   
     }
     IEnumerator LoadAfterWait(float seconds, int level)
@@ -169,7 +170,6 @@ public class GameController : MonoBehaviour
     public void ExitToWindows()
     {
         UnityEngine.Application.Quit();
-        Debug.Log("exit to windows");
     }
     public void WinScreen()
     {
@@ -194,5 +194,13 @@ public class GameController : MonoBehaviour
                 text.text = ans;
             }
         }
+    }
+    public bool gameIsPaused()
+    {
+        if(isLose) return true;
+        
+        FollowPlayer followPlayer = Camera.main.gameObject.GetComponent<FollowPlayer>();
+
+        return !followPlayer.playing;
     }
 }

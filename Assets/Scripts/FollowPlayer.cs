@@ -194,6 +194,4 @@ public class FollowPlayer : MonoBehaviour
         Gizmos.DrawLine(new Vector2(limits[3], limits[2]), new Vector2(limits[3], limits[0]));
         Gizmos.DrawLine(new Vector2(limits[3], limits[0]), new Vector2(limits[1], limits[0]));
     }
-
-
 }

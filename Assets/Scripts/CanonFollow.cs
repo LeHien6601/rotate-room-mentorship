@@ -27,6 +27,8 @@ public class CanonFollow : MonoBehaviour
 
     private void CheckIfCanFire()
     {
+        if(GameController.instance.gameIsPaused()) return;
+
         RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position, player.transform.position - gameObject.transform.position, radius, obstacle);
         if (hit.collider == null)
         {
