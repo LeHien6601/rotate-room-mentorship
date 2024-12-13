@@ -51,7 +51,17 @@ MonoBehaviour:
   exit: {fileID: 4016327147333289912}
   lose: {fileID: 7065702607024213899}
   restart: {fileID: 3818059168533123142}
+  winscreen: {fileID: 0}
   maxLevel: 2
+  currentLevel: 0
+  ui_script: {fileID: 0}
+  player: {fileID: 0}
+  KeysNeededToContinue: 5
+  KeysCollected: 0
+  finishGate: {fileID: 0}
+  timeElapsed: 0
+  winSoundClip: {fileID: 8300000, guid: d7df9ecf498bf574295998f8769a3baf, type: 3}
+  loseSoundClip: {fileID: 8300000, guid: 97e3f28a00a5b6c47836f34e176b0554, type: 3}
 --- !u!82 &3856918207277649196
 AudioSource:
   m_ObjectHideFlags: 0
@@ -492,6 +502,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4178834146927680861, guid: a1f6902a0d014a24b99c85f11bd6d170, type: 3}
+      propertyPath: sfxAudioSources.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4178834146927680861, guid: a1f6902a0d014a24b99c85f11bd6d170, type: 3}
+      propertyPath: sfxAudioSources.Array.data[1]
+      value: 
+      objectReference: {fileID: 3856918207277649196}
     - target: {fileID: 4510800408952575968, guid: a1f6902a0d014a24b99c85f11bd6d170, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

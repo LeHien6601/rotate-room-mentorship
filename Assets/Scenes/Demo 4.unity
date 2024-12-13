@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 34986685}
   m_Layer: 0
   m_Name: Key
-  m_TagString: Untagged
+  m_TagString: Key
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -379,6 +379,11 @@ MonoBehaviour:
   - 19.8
   - -14.6
   - -18.3
+  playing: 0
+  targetObject: {fileID: 0}
+  prepareTimer: 0
+  prepareDuration: 4
+  moveSpeed: 1
 --- !u!1 &154084180
 GameObject:
   m_ObjectHideFlags: 0
@@ -393,7 +398,7 @@ GameObject:
   - component: {fileID: 154084183}
   m_Layer: 0
   m_Name: Key
-  m_TagString: Untagged
+  m_TagString: Key
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -789,7 +794,7 @@ GameObject:
   - component: {fileID: 278665877}
   m_Layer: 0
   m_Name: Key
-  m_TagString: Untagged
+  m_TagString: Key
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2333,7 +2338,7 @@ GameObject:
   - component: {fileID: 888250457}
   m_Layer: 0
   m_Name: Key
-  m_TagString: Untagged
+  m_TagString: Key
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3800,6 +3805,10 @@ PrefabInstance:
       propertyPath: camFollow
       value: 
       objectReference: {fileID: 97195436}
+    - target: {fileID: 108185829406628328, guid: a1b253d0771e8ca4db1728fe0a6113a0, type: 3}
+      propertyPath: dieSoundClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 15c92e30f516c254a9800abdff5b3700, type: 3}
     - target: {fileID: 293186552267730333, guid: a1b253d0771e8ca4db1728fe0a6113a0, type: 3}
       propertyPath: m_LocalPosition.x
       value: -10.12
@@ -3855,6 +3864,14 @@ PrefabInstance:
     - target: {fileID: 6820712811421062158, guid: a1b253d0771e8ca4db1728fe0a6113a0, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7658717832952996730, guid: a1b253d0771e8ca4db1728fe0a6113a0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.042
+      objectReference: {fileID: 0}
+    - target: {fileID: 7658717832952996730, guid: a1b253d0771e8ca4db1728fe0a6113a0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.363
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4338,7 +4355,7 @@ GameObject:
   - component: {fileID: 1988987986}
   m_Layer: 0
   m_Name: Key
-  m_TagString: Untagged
+  m_TagString: Key
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7599,6 +7616,10 @@ PrefabInstance:
     - target: {fileID: 4764218175287034859, guid: 2f65c953bb0635c4cb5d1bf0ebb2c9b2, type: 3}
       propertyPath: currentLevel
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4764218175287034859, guid: 2f65c953bb0635c4cb5d1bf0ebb2c9b2, type: 3}
+      propertyPath: KeysCollected
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4764218175287034859, guid: 2f65c953bb0635c4cb5d1bf0ebb2c9b2, type: 3}
       propertyPath: KeysNeededToContinue

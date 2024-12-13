@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -24,6 +24,9 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject finishGate;
     [SerializeField] float timeElapsed = 0f;
     public static GameController instance;
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip winSoundClip;
+    [SerializeField] private AudioClip loseSoundClip;
     private void Awake()
     {
         if (instance == null)
@@ -40,6 +43,7 @@ public class GameController : MonoBehaviour
     {
         getOjects();
         timeElapsed = 0;
+        audioSource = GetComponent<AudioSource>();
     }
     void FixedUpdate()
     {
@@ -80,11 +84,13 @@ public class GameController : MonoBehaviour
         }
     }
     public void loseGame()
-    {
+    { 
         if(!lose) getOjects();
         isLose = true;
         Debug.Log("lose");
         lose.transform.DOScale(1f, 0.5f).SetUpdate(true);
+        audioSource.ignoreListenerPause = true;
+        audioSource.PlayOneShot(loseSoundClip);
     }
     public void clickMenu()
     {
@@ -167,6 +173,7 @@ public class GameController : MonoBehaviour
     }
     public void WinScreen()
     {
+        audioSource.PlayOneShot(winSoundClip);
         winscreen.transform.DOScale(1f, 0.5f);
         string[] victorytext = {"You win!", "Great Jumps!", "Good shot!"};
         TMP_Text[] arr = winscreen.GetComponentsInChildren<TMP_Text>();

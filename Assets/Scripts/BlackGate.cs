@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +11,14 @@ public class BlackGate : MonoBehaviour
     private float timer = 0f;
     private Vector2 initialVelocity;
     private float initialAlpha;
+
+    private AudioSource audioSource;
+    public AudioClip soundEffect;
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
     private void Update()
     {
         if (timer > 0f)
@@ -26,6 +34,7 @@ public class BlackGate : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        audioSource.PlayOneShot(soundEffect);
         if (collision == null) return;
         //if (collision.tag != "Player") return;
         Rigidbody2D rb = collision.GetComponent<Rigidbody2D>();

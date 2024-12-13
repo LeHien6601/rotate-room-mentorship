@@ -104,6 +104,7 @@ MonoBehaviour:
   timer: 0
   duration: 1
   levelToLoad: 1
+  winSoundClip: {fileID: 8300000, guid: d7df9ecf498bf574295998f8769a3baf, type: 3}
 --- !u!58 &6182572778791218491
 CircleCollider2D:
   m_ObjectHideFlags: 0
