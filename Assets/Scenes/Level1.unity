@@ -1854,6 +1854,30 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 170996869}
+    - target: {fileID: 3356422137237862625, guid: c4bac7fe2ad81c0469922f82e5424f49, type: 3}
+      propertyPath: moveSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356422137237862625, guid: c4bac7fe2ad81c0469922f82e5424f49, type: 3}
+      propertyPath: prepareDuration
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356422137237862625, guid: c4bac7fe2ad81c0469922f82e5424f49, type: 3}
+      propertyPath: limits.Array.data[0]
+      value: 16.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356422137237862625, guid: c4bac7fe2ad81c0469922f82e5424f49, type: 3}
+      propertyPath: limits.Array.data[1]
+      value: 34.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356422137237862625, guid: c4bac7fe2ad81c0469922f82e5424f49, type: 3}
+      propertyPath: limits.Array.data[2]
+      value: -18.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356422137237862625, guid: c4bac7fe2ad81c0469922f82e5424f49, type: 3}
+      propertyPath: limits.Array.data[3]
+      value: -31.3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

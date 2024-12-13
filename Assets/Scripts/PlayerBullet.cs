@@ -10,11 +10,15 @@ public class PlayerBullet : MonoBehaviour
     [SerializeField] protected SpriteRenderer sprite;
     [SerializeField] protected ParticleSystem particle;
     protected bool isExploded = false;
+
+    public AudioClip soundEffect;
+    private AudioSource audioSource;
     // public Vector3 direction;
     // public float speed;
     private void Start()
     {
         particle.Stop();
+        audioSource = GetComponent<AudioSource>();
     }
     void Update()
     {
@@ -46,6 +50,7 @@ public class PlayerBullet : MonoBehaviour
                 // speed = 0;
                 isExploded = true;
                 particle.Play();
+                audioSource.PlayOneShot(soundEffect);
             }
         }
     }

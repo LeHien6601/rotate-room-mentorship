@@ -9,6 +9,8 @@ TagManager:
   - Wall
   - Cannons
   - UI
+  - Gun
+  - Key
   layers:
   - Default
   - TransparentFX

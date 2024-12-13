@@ -15,6 +15,7 @@ public class FinishGate : MonoBehaviour
     [SerializeField] int levelToLoad;
     private bool expand = true;
     private Player player;
+    [SerializeField] private AudioClip winSoundClip;
     private void Update()
     {
         if (timer > duration)
@@ -47,6 +48,7 @@ public class FinishGate : MonoBehaviour
         rb.velocity = Vector3.zero;
         player = collision.gameObject.GetComponent<Player>();
         player.GetAnimator().SetTrigger("Win");
+        player.GetComponent<AudioSource>().PlayOneShot(winSoundClip);
         rb.DOMove(transform.position, 3f);
         Sequence mysequence = DOTween.Sequence();
         mysequence.Append(player.gameObject.transform.DOScale(0, 1.5f));

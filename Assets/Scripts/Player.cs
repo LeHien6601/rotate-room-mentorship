@@ -31,6 +31,9 @@ public class Player : MonoBehaviour
 
     [SerializeField] private AudioClip jumpSoundClip;
     [SerializeField] private AudioClip rotateSoundClip;
+    [SerializeField] private AudioClip dieSoundClip;
+    [SerializeField] private AudioClip fireSoundClip;
+    [SerializeField] private AudioClip collectSoundClip;
     private Gun gun;
     public bool hasgun {get; private set;}
     private void Start()
@@ -43,6 +46,7 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
+        if (!camFollow.playing) return;
         if (Input.GetKeyDown(KeyCode.L)) GameController.instance.loseGame();
         if (Input.GetKeyDown(KeyCode.N)) GameController.instance.LoadNextLevel();
         //Dead trigger
@@ -134,6 +138,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!camFollow.playing) return;
         if (rb.bodyType != RigidbodyType2D.Dynamic) return;
 
         //Check if player on platform or not
@@ -362,6 +367,8 @@ public class Player : MonoBehaviour
             Visual.transform.DOScale(Vector2.one, 0.2f).SetDelay(0.3f);
             // Shooting();
             gun.Shoot(shootDirection);
+            AudioSource audioSource = GetComponent<AudioSource>();
+            audioSource.PlayOneShot(fireSoundClip);
             canShoot = false;
             Invoke("ResetCanShoot", 1);
             Visual.transform.DORotate(oldRotation, 0.1f).SetDelay(0.5f);
@@ -376,6 +383,8 @@ public class Player : MonoBehaviour
     {
         rb.bodyType = RigidbodyType2D.Static;
         particle.Play();
+        AudioSource audioSource = GetComponent<AudioSource>();
+        audioSource.PlayOneShot(dieSoundClip);
         isDead = true;
     }
     public void setGun(Gun in_gun)
@@ -394,5 +403,14 @@ public class Player : MonoBehaviour
     public Animator GetAnimator()
     {
         return playerAnim;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Gun") || collision.CompareTag("Key"))
+        {
+            AudioSource audioSource = GetComponent<AudioSource>();
+            audioSource.PlayOneShot(collectSoundClip);
+        }
     }
 }

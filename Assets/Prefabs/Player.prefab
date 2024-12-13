@@ -95,6 +95,9 @@ MonoBehaviour:
   bulletPoint: {fileID: 7658717832952996730}
   jumpSoundClip: {fileID: 8300000, guid: 2c5292ba5cf254919a6b9e2b18e04f49, type: 3}
   rotateSoundClip: {fileID: 8300000, guid: 4e1ff8faed12a475eba9be0e46072269, type: 3}
+  dieSoundClip: {fileID: 8300000, guid: 15c92e30f516c254a9800abdff5b3700, type: 3}
+  fireSoundClip: {fileID: 8300000, guid: 90c25f6b0b2a9654c889d7bfe84f335d, type: 3}
+  collectSoundClip: {fileID: 8300000, guid: 197b9d8e74b04df4a9af8daf34ccf88b, type: 3}
 --- !u!61 &8504571107223148534
 BoxCollider2D:
   m_ObjectHideFlags: 0

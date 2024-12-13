@@ -1,6 +1,7 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class FollowPlayer : MonoBehaviour
 {
@@ -14,8 +15,19 @@ public class FollowPlayer : MonoBehaviour
     private float oldDegree = 0f;
     private float targetDegree = 0f;
     private bool[] isLimit = new bool[2] { false, false };
+    
+    
+    private bool preparing = true;
+    public bool playing = false;
+    [SerializeField] private Transform targetObject;
+    public float prepareTimer = 0;
+    public float prepareDuration = 4;
+    public float moveSpeed = 1;
+
+
     private void Start()
     {
+        targetObject = GameObject.FindGameObjectWithTag("Finish").transform;
         height = Camera.main.orthographicSize;
         width = height * Camera.main.aspect;
     }
@@ -23,6 +35,7 @@ public class FollowPlayer : MonoBehaviour
     //Modifies camera's transform
     void FixedUpdate()
     {
+        if (!playing) return;
         if (timer > 0f)
         {
             if (targetDegree > 0f)
@@ -42,6 +55,47 @@ public class FollowPlayer : MonoBehaviour
         }
         CameraLimit();
         CameraFollow();
+    }
+
+    void Update()
+    {
+        if (!playing) CheckFinishGate();
+    }
+
+    private void CheckFinishGate()
+    {
+        if (preparing)
+        {
+            // Đếm thời gian focus vào vật thể
+            prepareTimer += Time.deltaTime;
+
+            if (targetObject != null)
+            {
+                transform.position = Vector3.Lerp(transform.position, new Vector3(targetObject.position.x, targetObject.position.y, transform.position.z), moveSpeed * Time.deltaTime);
+            }
+
+            if (prepareTimer >= prepareDuration)
+            {
+                // Chuyển sang trạng thái di chuyển về phía người chơi
+                preparing = false;
+                prepareTimer = 0.0f; // Reset bộ đếm thời gian
+            }
+        }
+        else
+        {
+            prepareTimer += Time.deltaTime;
+            if (prepareTimer >= prepareDuration)
+            {
+                // Trả về trạng thái playing
+                playing = true;
+                prepareTimer = 0.0f; // Reset bộ đếm thời gian
+            }
+            // Từ từ di chuyển camera về phía người chơi
+            if (player != null)
+            {
+                transform.position = Vector3.Lerp(transform.position, new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z), moveSpeed * Time.deltaTime);
+            }
+        }
     }
     private void CameraFollow()
     {
