@@ -48,6 +48,8 @@ public class GameController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
 
         player.GetComponentInChildren<SpriteRenderer>().color = Resources.Load<Colors>("CustomCharacter/Colors/" + PlayerPrefs.GetString("Color")).mainColor;
+        
+        SceneManager.sceneLoaded += loadPlayerColor;
     }
     void FixedUpdate()
     {
@@ -95,6 +97,7 @@ public class GameController : MonoBehaviour
         lose.transform.DOScale(1f, 0.5f).SetUpdate(true);
         audioSource.ignoreListenerPause = true;
         audioSource.PlayOneShot(loseSoundClip);
+        player.GetComponentInChildren<SpriteRenderer>().color = Resources.Load<Colors>("CustomCharacter/Colors/" + PlayerPrefs.GetString("Color")).mainColor;
     }
     public void clickMenu()
     {
@@ -119,10 +122,16 @@ public class GameController : MonoBehaviour
     public void LoadNextLevel()
     {
         Time.timeScale = 1f;
+        currentLevel = SceneManager.GetActiveScene().buildIndex;
         currentLevel = (currentLevel + 1) % maxLevel;
         SFXVolumeSetting.instance.ClearAudioSource();
         SceneManager.LoadScene(currentLevel);
         timeElapsed = 0f;
+    }
+    void loadPlayerColor(Scene scene, LoadSceneMode mode)
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+        player.GetComponentInChildren<SpriteRenderer>().color = Resources.Load<Colors>("CustomCharacter/Colors/" + PlayerPrefs.GetString("Color")).mainColor;
     }
     public void LoadLevel(int level)
     {
@@ -135,6 +144,7 @@ public class GameController : MonoBehaviour
         Time.timeScale = 1f;
         isLose = false;
         SFXVolumeSetting.instance.ClearAudioSource();
+        currentLevel = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentLevel);
         timeElapsed = 0f;
     }
