@@ -27,7 +27,7 @@ public class FollowPlayer : MonoBehaviour
 
     private void Start()
     {
-        targetObject = GameObject.FindGameObjectWithTag("Finish").transform;
+        if(GameController.instance.KeysNeededToContinue == 0) targetObject = GameController.instance.finishGate.transform;
         height = Camera.main.orthographicSize;
         width = height * Camera.main.aspect;
     }

@@ -18,6 +18,7 @@ public class CanonBullet : MonoBehaviour
     }
     void Update()
     {
+        if(GameController.instance.gameIsPaused()) return;
         if (isExploded)
         {
             if (particle.isStopped)
@@ -38,6 +39,7 @@ public class CanonBullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if(GameController.instance.gameIsPaused()) return;
         if (collision.gameObject.layer == 6)
         {
             speed = 0;

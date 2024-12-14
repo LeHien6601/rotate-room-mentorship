@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Demo 7.unity
     guid: 77701d65386603344bfeebacb9d45481
+  - enabled: 1
+    path: Assets/Scenes/Custom Character.unity
+    guid: a25005030b8ec3c4cb393f970655c980
   m_configObjects: {}

@@ -42,6 +42,7 @@ public class PlayerBullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if(GameController.instance.gameIsPaused()) return;
         if(collision.gameObject.CompareTag("Bullet")) return;
         if (collision.gameObject.layer != LayerMask.NameToLayer("Player"))
         {        

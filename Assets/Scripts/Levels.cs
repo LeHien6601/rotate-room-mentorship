@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
-using TMPro;
 
 [CreateAssetMenu(fileName = "Level", menuName = "Scriptables/Levels")]
 public class Levels : ScriptableObject
