@@ -19,7 +19,7 @@ public class GameController : MonoBehaviour
     private bool isLose = false;
     [SerializeField] private UI ui_script;
     [SerializeField] private GameObject player;
-    [SerializeField] private uint KeysNeededToContinue = 5;
+    public uint KeysNeededToContinue = 5;
     [SerializeField] private uint KeysCollected = 0;
     [SerializeField] private GameObject finishGate;
     [SerializeField] float timeElapsed = 0f;
