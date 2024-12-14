@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject menu;
     [SerializeField] private GameObject settings;
     [SerializeField] private GameObject exit;
+    [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject lose;
     [SerializeField] private GameObject restart;
     [SerializeField] private GameObject winscreen;
@@ -55,6 +56,7 @@ public class GameController : MonoBehaviour
         if(!finishGate) getOjects();
         if(KeysCollected != KeysNeededToContinue) 
         {
+            Debug.Log("Set unactive");
             finishGate.SetActive(false);
         }
         else
@@ -66,15 +68,16 @@ public class GameController : MonoBehaviour
     {
         menu.GetComponent<Button>().onClick.AddListener(clickMenu);
         exit.GetComponent<Button>().onClick.AddListener(clickExit);
+        mainMenu.GetComponent<Button>().onClick.AddListener(clickMainMenu);
         restart.GetComponent<Button>().onClick.AddListener(clickRestart);
         settings.transform.localScale = Vector3.zero;
         lose.transform.localScale = Vector3.zero;
         winscreen.transform.localScale = Vector3.zero;
-        Debug.Log("Add listener");
     }
     private void Update()
     {
         if(currentLevel == 3) KeysNeededToContinue = 5;
+        if (currentLevel == 0) return;
         CheckGate();
         if (isLose)
         {
@@ -112,6 +115,13 @@ public class GameController : MonoBehaviour
         Time.timeScale = 1f;
         lose.transform.DOScale(0f, 0.5f);
         ReloadCurrentLevel();
+    }
+    private void clickMainMenu()
+    {
+        if (!settings) getOjects();
+        Time.timeScale = 1f;
+        settings.transform.DOScale(0f, 0.5f);
+        LoadLevel(0);
     }
     public void LoadNextLevel()
     {

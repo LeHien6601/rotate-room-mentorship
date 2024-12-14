@@ -40,6 +40,7 @@ public class Player : MonoBehaviour
     {
         particle.Stop();
         initialColor = sprite.color;
+        Debug.Log("Add sfx player");
         SFXVolumeSetting.instance.AddAudioSource(GetComponent<AudioSource>());
         SFXVolumeSetting.instance.UpdateVolume();
         // gun = GetComponentInChildren<Gun>();
