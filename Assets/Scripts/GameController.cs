@@ -45,6 +45,9 @@ public class GameController : MonoBehaviour
         getOjects();
         timeElapsed = 0;
         audioSource = GetComponent<AudioSource>();
+        player = GameObject.FindGameObjectWithTag("Player");
+
+        player.GetComponentInChildren<SpriteRenderer>().color = Resources.Load<Colors>("CustomCharacter/Colors/" + PlayerPrefs.GetString("Color")).mainColor;
     }
     void FixedUpdate()
     {
