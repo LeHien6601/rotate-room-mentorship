@@ -49,7 +49,7 @@ public class GameController : MonoBehaviour
 
         player.GetComponentInChildren<SpriteRenderer>().color = Resources.Load<Colors>("CustomCharacter/Colors/" + PlayerPrefs.GetString("Color")).mainColor;
         
-        SceneManager.sceneLoaded += loadPlayerColor;
+        SceneManager.sceneLoaded += onNewSceneLoad;
     }
     void FixedUpdate()
     {
@@ -128,10 +128,14 @@ public class GameController : MonoBehaviour
         SceneManager.LoadScene(currentLevel);
         timeElapsed = 0f;
     }
-    void loadPlayerColor(Scene scene, LoadSceneMode mode)
+    void onNewSceneLoad(Scene scene, LoadSceneMode mode)
     {
         player = GameObject.FindGameObjectWithTag("Player");
         player.GetComponentInChildren<SpriteRenderer>().color = Resources.Load<Colors>("CustomCharacter/Colors/" + PlayerPrefs.GetString("Color")).mainColor;
+        getOjects();
+        timeElapsed = 0f;
+        KeysCollected = 0;
+        if(KeysNeededToContinue != 0) finishGate.SetActive(false);
     }
     public void LoadLevel(int level)
     {
