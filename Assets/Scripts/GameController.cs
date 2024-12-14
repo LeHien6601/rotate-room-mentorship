@@ -21,13 +21,13 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject player;
     public uint KeysNeededToContinue = 5;
     [SerializeField] private uint KeysCollected = 0;
-    [SerializeField] private GameObject finishGate;
+    public GameObject finishGate{get; private set;}
     [SerializeField] float timeElapsed = 0f;
     public static GameController instance;
     private AudioSource audioSource;
     [SerializeField] private AudioClip winSoundClip;
     [SerializeField] private AudioClip loseSoundClip;    
-    bool firstTime = false;
+    bool isPaused = false;
     private void Awake()
     {
         if (instance == null)
@@ -50,6 +50,8 @@ public class GameController : MonoBehaviour
         player.GetComponentInChildren<SpriteRenderer>().color = Resources.Load<Colors>("CustomCharacter/Colors/" + PlayerPrefs.GetString("Color")).mainColor;
         
         SceneManager.sceneLoaded += onNewSceneLoad;
+        if(SceneManager.GetActiveScene().buildIndex == 4) KeysNeededToContinue = 5;
+        else KeysNeededToContinue = 0;
     }
     void FixedUpdate()
     {
@@ -135,7 +137,11 @@ public class GameController : MonoBehaviour
         getOjects();
         timeElapsed = 0f;
         KeysCollected = 0;
+        isPaused = false;
         if(KeysNeededToContinue != 0) finishGate.SetActive(false);
+        SubscribeToUI();
+        if(SceneManager.GetActiveScene().buildIndex == 4) KeysNeededToContinue = 5;
+        else KeysNeededToContinue = 0;
     }
     public void LoadLevel(int level)
     {
@@ -190,6 +196,7 @@ public class GameController : MonoBehaviour
     }
     public void WinScreen()
     {
+        isPaused = true;
         audioSource.PlayOneShot(winSoundClip);
         winscreen.transform.DOScale(1f, 0.5f);
         string[] victorytext = {"You win!", "Great Jumps!", "Good shot!"};
@@ -214,7 +221,7 @@ public class GameController : MonoBehaviour
     }
     public bool gameIsPaused()
     {
-        if(isLose) return true;
+        if(isLose || isPaused) return true;
         
         FollowPlayer followPlayer = Camera.main.gameObject.GetComponent<FollowPlayer>();
 
