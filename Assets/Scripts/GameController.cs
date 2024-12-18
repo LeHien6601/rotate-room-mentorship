@@ -46,10 +46,23 @@ public class GameController : MonoBehaviour
         getOjects();
         timeElapsed = 0;
         audioSource = GetComponent<AudioSource>();
-        player = GameObject.FindGameObjectWithTag("Player");
 
-        player.GetComponentInChildren<SpriteRenderer>().color = Resources.Load<Colors>("CustomCharacter/Colors/" + PlayerPrefs.GetString("Color")).mainColor;
-        
+        player = GameObject.FindGameObjectWithTag("Player");
+        if (PlayerPrefs.HasKey("Color") && PlayerPrefs.HasKey("Alpha"))
+        {
+            Debug.Log(currentLevel + " " + maxLevel);
+            string colorHex = PlayerPrefs.GetString("Color");
+            Color color;
+            ColorUtility.TryParseHtmlString("#"+colorHex, out color);
+            Debug.Log(color);
+            player.GetComponentInChildren<SpriteRenderer>().color = new Color(color.r, color.g, color.b, PlayerPrefs.GetFloat("Alpha"));
+        }
+        else
+        {
+            player.GetComponentInChildren<SpriteRenderer>().color = Color.red;
+        }
+        //player.GetComponentInChildren<SpriteRenderer>().color = Resources.Load<Colors>("CustomCharacter/Colors/" + PlayerPrefs.GetString("Color")).mainColor;
+
         SceneManager.sceneLoaded += onNewSceneLoad;
         if(SceneManager.GetActiveScene().buildIndex == 4) KeysNeededToContinue = 5;
         else KeysNeededToContinue = 0;
@@ -83,9 +96,9 @@ public class GameController : MonoBehaviour
     }
     private void Update()
     {
-        if(currentLevel == 3) KeysNeededToContinue = 5;
+        //if(currentLevel == 3) KeysNeededToContinue = 5;
         if (currentLevel == 0) return;
-        CheckGate();
+        //CheckGate();
         if (isLose)
         {
             if (Input.GetKeyDown(KeyCode.R))
@@ -95,26 +108,22 @@ public class GameController : MonoBehaviour
         }
     }
     public void loseGame()
-    { 
-        if(!lose) getOjects();
+    {
         isLose = true;
         Debug.Log("lose");
         lose.transform.DOScale(1f, 0.5f).SetUpdate(true);
         audioSource.ignoreListenerPause = true;
         audioSource.PlayOneShot(loseSoundClip);
-        player.GetComponentInChildren<SpriteRenderer>().color = Resources.Load<Colors>("CustomCharacter/Colors/" + PlayerPrefs.GetString("Color")).mainColor;
     }
     public void clickMenu()
     {
-        if(!settings) getOjects();
-        // Debug.Log("Menu");
+        Debug.Log("Menu");
         Time.timeScale = 0;
         settings.transform.DOScale(1f, 0.5f).SetUpdate(true);
     }
     public void clickExit()
     {
-        if(!settings) getOjects();
-        // Debug.Log("Exit");
+        Debug.Log("Exit");
         Time.timeScale = 1;
         settings.transform.DOScale(0f, 0.5f);
     }
@@ -126,7 +135,6 @@ public class GameController : MonoBehaviour
     }
     private void clickMainMenu()
     {
-        if (!settings) getOjects();
         Time.timeScale = 1f;
         settings.transform.DOScale(0f, 0.5f);
         LoadLevel(0);
@@ -135,6 +143,7 @@ public class GameController : MonoBehaviour
     {
         Time.timeScale = 1f;
         currentLevel = SceneManager.GetActiveScene().buildIndex;
+        winscreen.transform.DOScale(0f, 0.5f);
         currentLevel = (currentLevel + 1) % maxLevel;
         SFXVolumeSetting.instance.ClearAudioSource();
         SceneManager.LoadScene(currentLevel);
@@ -143,21 +152,57 @@ public class GameController : MonoBehaviour
     void onNewSceneLoad(Scene scene, LoadSceneMode mode)
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        player.GetComponentInChildren<SpriteRenderer>().color = Resources.Load<Colors>("CustomCharacter/Colors/" + PlayerPrefs.GetString("Color")).mainColor;
-        getOjects();
+        if (PlayerPrefs.HasKey("Color") && PlayerPrefs.HasKey("Alpha"))
+        {
+            Debug.Log(currentLevel + " " + maxLevel);
+            string colorHex = PlayerPrefs.GetString("Color");
+            Debug.Log(colorHex);
+            Color color;
+            if (ColorUtility.TryParseHtmlString("#"+colorHex, out color))
+            {
+                Debug.Log(color);
+                if (currentLevel != maxLevel)
+                {
+                    player.GetComponentInChildren<SpriteRenderer>().color = new Color(color.r, color.g, color.b, PlayerPrefs.GetFloat("Alpha"));
+                }
+                else
+                {
+                    player.GetComponent<Image>().color = new Color(color.r, color.g, color.b, PlayerPrefs.GetFloat("Alpha"));
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("else " + currentLevel + " " + maxLevel);
+            if (currentLevel != maxLevel)
+            {
+                player.GetComponentInChildren<SpriteRenderer>().color = Color.gray;
+            }
+            else
+            {
+                player.GetComponent<Image>().color = Color.gray;
+            }
+        }
+        //player.GetComponentInChildren<SpriteRenderer>().color = Resources.Load<Colors>("CustomCharacter/Colors/" + PlayerPrefs.GetString("Color")).mainColor;
+        //getOjects();
         timeElapsed = 0f;
         KeysCollected = 0;
         isPaused = false;
         if(KeysNeededToContinue != 0) finishGate.SetActive(false);
-        SubscribeToUI();
+        //SubscribeToUI();
         if(SceneManager.GetActiveScene().buildIndex == 4) KeysNeededToContinue = 5;
         else KeysNeededToContinue = 0;
     }
     public void LoadLevel(int level)
     {
         Time.timeScale = 1f;
+        currentLevel = level;
         SceneManager.LoadScene(level);
         KeysCollected = 0;
+    }
+    public void LoadCustom()
+    {
+        LoadLevel(maxLevel);
     }
     private void ReloadCurrentLevel()
     {
@@ -196,9 +241,8 @@ public class GameController : MonoBehaviour
         settings = ui_script.Settings;
         exit = ui_script.Exit;
         winscreen = ui_script.WinScreen;
-        // Debug.Log("Add listener");
         SubscribeToUI();
-        CheckGate();
+        //CheckGate();
     }
     public void ExitToWindows()
     {
@@ -222,9 +266,9 @@ public class GameController : MonoBehaviour
 
             if(text.name == "Text")
             {
-                string ans = "Stars: " + KeysCollected;
-                ans += '\n';
-                ans += "Time: " + (int)timeElapsed;
+                //string ans = "Stars: " + KeysCollected;
+                //ans += '\n';
+                string ans = "Time: " + (int)timeElapsed;
                 text.text = ans;
             }
         }

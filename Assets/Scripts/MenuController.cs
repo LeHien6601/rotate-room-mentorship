@@ -10,18 +10,14 @@ public class MenuController : MonoBehaviour
     [SerializeField] GameObject title;
     [SerializeField] GameObject buttons;
     [SerializeField] GameObject lvlselector;
-    void Start()
-    {
-        
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void LoadLevel(int index)
     {
-        SceneManager.LoadScene(index);
+        GameController.instance.LoadLevel(index);
+        //SceneManager.LoadScene(index);
+    }
+    public void LoadCustom()
+    {
+        GameController.instance.LoadCustom();
     }
     public void SelectLevel()
     {

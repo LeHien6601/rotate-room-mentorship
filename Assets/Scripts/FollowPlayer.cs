@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -27,7 +28,8 @@ public class FollowPlayer : MonoBehaviour
 
     private void Start()
     {
-        if(GameController.instance.KeysNeededToContinue == 0) targetObject = GameController.instance.finishGate.transform;
+        //if (GameController.instance.KeysNeededToContinue == 0) targetObject = GameController.instance.finishGate.transform;
+        targetObject = GameObject.FindGameObjectWithTag("Finish").transform;
         height = Camera.main.orthographicSize;
         width = height * Camera.main.aspect;
     }

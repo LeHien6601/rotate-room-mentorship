@@ -40,7 +40,6 @@ public class Player : MonoBehaviour
     {
         particle.Stop();
         initialColor = sprite.color;
-        Debug.Log("Add sfx player");
         SFXVolumeSetting.instance.AddAudioSource(GetComponent<AudioSource>());
         SFXVolumeSetting.instance.UpdateVolume();
         // gun = GetComponentInChildren<Gun>();
@@ -98,7 +97,6 @@ public class Player : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) && jumpCount > 0)
         {
             jumpTrigger = true;
-            // Debug.Log("jump");
         }
 
         if (onGround == true)
@@ -146,6 +144,14 @@ public class Player : MonoBehaviour
         GameObject platform = OnPlatform();
         if (platform != null && transform.parent != null && transform.parent.tag == "Platform")
         {
+            if (directions[0] == Vector2.up || directions[0] == Vector2.down)
+            {
+                rb.velocity = new Vector2(0, rb.velocity.y);
+            }
+            else
+            {
+                rb.velocity = new Vector2(rb.velocity.x, 0);
+            }
             if (!platform.GetComponent<BoxCollider2D>().isTrigger)
             {
                 if (Input.GetKey(KeyCode.S))    //Player off platform
@@ -211,7 +217,7 @@ public class Player : MonoBehaviour
     //Checks player on ground or not
     private bool OnGround()
     {
-        RaycastHit2D hit = Physics2D.BoxCast((Vector2)transform.position, new Vector2(1f, 0.1f),
+        RaycastHit2D hit = Physics2D.BoxCast((Vector2)transform.position, new Vector2(0.6f, 0.1f),
                                               Vector2.SignedAngle(Vector2.left, directions[1]), directions[2], 0f, LayerMask.GetMask("Obstacle"));
         if (hit.collider == null)
         {

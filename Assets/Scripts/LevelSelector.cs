@@ -17,10 +17,4 @@ public class LevelSelector : MonoBehaviour
             Instantiate(levelobject, transform).GetComponent<LevelUI>().setLevel(level);
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
