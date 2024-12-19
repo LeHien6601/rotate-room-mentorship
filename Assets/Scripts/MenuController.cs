@@ -13,7 +13,6 @@ public class MenuController : MonoBehaviour
     public void LoadLevel(int index)
     {
         GameController.instance.LoadLevel(index);
-        //SceneManager.LoadScene(index);
     }
     public void LoadCustom()
     {

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb55fdcaecb361b42805c221e1c4d29f, type: 3}
   m_Name: 2
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: 3dc6ddf81dc87dc47a249b6a0040e69f, type: 3}
+  image: {fileID: 21300000, guid: d069485f14073404a937518351575802, type: 3}
   text: Level 2
   sceneIndex: 2

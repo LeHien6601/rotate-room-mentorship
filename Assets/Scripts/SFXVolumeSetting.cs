@@ -39,7 +39,7 @@ public class SFXVolumeSetting : MonoBehaviour, IPointerClickHandler
     }
     public void ClearAudioSource()
     {
-        while (sfxAudioSources.Count > 1)
+        while (sfxAudioSources.Count > 2)
         {
             sfxAudioSources.RemoveAt(sfxAudioSources.Count - 1);
         }

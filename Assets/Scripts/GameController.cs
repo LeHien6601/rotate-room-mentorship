@@ -4,7 +4,6 @@ using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
 using TMPro;
-using JetBrains.Annotations;
 
 public class GameController : MonoBehaviour
 {
@@ -18,6 +17,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private int maxLevel;
     [SerializeField] private int currentLevel = 0;
     private bool isLose = false;
+    private bool isWin = false;
     [SerializeField] private UI ui_script;
     [SerializeField] private GameObject player;
     public uint KeysNeededToContinue = 5;
@@ -26,6 +26,8 @@ public class GameController : MonoBehaviour
     [SerializeField] float timeElapsed = 0f;
     public static GameController instance;
     private AudioSource audioSource;
+    [SerializeField] private float fadeTime = 1f;
+    [SerializeField] private AudioSource sfxAudioSource;
     [SerializeField] private AudioClip winSoundClip;
     [SerializeField] private AudioClip loseSoundClip;    
     bool isPaused = false;
@@ -76,7 +78,6 @@ public class GameController : MonoBehaviour
         if(!finishGate) getOjects();
         if(KeysCollected != KeysNeededToContinue) 
         {
-            Debug.Log("Set unactive");
             finishGate.SetActive(false);
         }
         else
@@ -106,14 +107,59 @@ public class GameController : MonoBehaviour
                 clickRestart();
             }
         }
+        if (isPaused)
+        {
+            Debug.Log("Pause");
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                Debug.Log("Main");
+                clickMainMenu();
+            }
+            else if (Input.GetKeyDown(KeyCode.N) && isWin)
+            {
+                Debug.Log("Next");
+                LoadNextLevel();
+            }
+        }
     }
     public void loseGame()
     {
         isLose = true;
         Debug.Log("lose");
         lose.transform.DOScale(1f, 0.5f).SetUpdate(true);
-        audioSource.ignoreListenerPause = true;
-        audioSource.PlayOneShot(loseSoundClip);
+        sfxAudioSource.ignoreListenerPause = true;
+        sfxAudioSource.clip = loseSoundClip;
+        sfxAudioSource.Play();
+        StartCoroutine(FadeOutMusic());
+    }
+    IEnumerator FadeOutMusic()
+    {
+        float startVolume = audioSource.volume;
+        float t = 0f;
+
+        while (t < fadeTime && sfxAudioSource.isPlaying)
+        {
+            t += Time.deltaTime;
+            audioSource.volume = Mathf.Lerp(startVolume, 0, t / fadeTime);
+            yield return null;
+        }
+
+        // Đợi hiệu ứng âm thanh thua kết thúc
+        yield return new WaitForSeconds(sfxAudioSource.clip.length);
+
+        StartCoroutine(FadeInMusic(startVolume));
+    }
+
+    IEnumerator FadeInMusic(float startVolume)
+    {
+        float t = 0f;
+
+        while (t < fadeTime)
+        {
+            t += Time.deltaTime;
+            audioSource.volume = Mathf.Lerp(0, startVolume, t / fadeTime); 
+            yield return null;
+        }
     }
     public void clickMenu()
     {
@@ -188,6 +234,7 @@ public class GameController : MonoBehaviour
         timeElapsed = 0f;
         KeysCollected = 0;
         isPaused = false;
+        isWin = false;
         if(KeysNeededToContinue != 0) finishGate.SetActive(false);
         //SubscribeToUI();
         if(SceneManager.GetActiveScene().buildIndex == 4) KeysNeededToContinue = 5;
@@ -198,6 +245,12 @@ public class GameController : MonoBehaviour
         Time.timeScale = 1f;
         currentLevel = level;
         SceneManager.LoadScene(level);
+        SFXVolumeSetting.instance.ClearAudioSource();
+        winscreen.transform.DOScale(0f, 0.5f);
+        if (level == 0)
+        {
+            settings.transform.DOScale(0, 0.5f);
+        }
         KeysCollected = 0;
     }
     public void LoadCustom()
@@ -251,7 +304,10 @@ public class GameController : MonoBehaviour
     public void WinScreen()
     {
         isPaused = true;
-        audioSource.PlayOneShot(winSoundClip);
+        isWin = true;
+        sfxAudioSource.clip = winSoundClip;
+        sfxAudioSource.Play();
+        StartCoroutine(FadeOutMusic());
         winscreen.transform.DOScale(1f, 0.5f);
         string[] victorytext = {"You win!", "Great Jumps!", "Good shot!"};
         TMP_Text[] arr = winscreen.GetComponentsInChildren<TMP_Text>();

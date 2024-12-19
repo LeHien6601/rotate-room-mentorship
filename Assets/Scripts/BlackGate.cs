@@ -18,6 +18,8 @@ public class BlackGate : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        SFXVolumeSetting.instance.AddAudioSource(GetComponent<AudioSource>());
+        SFXVolumeSetting.instance.UpdateVolume();
     }
     private void Update()
     {

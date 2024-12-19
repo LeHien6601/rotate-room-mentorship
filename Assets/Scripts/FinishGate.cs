@@ -2,7 +2,6 @@ using DG.Tweening;
 using DG.Tweening.Core.Easing;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using UnityEngine;
 
@@ -16,8 +15,20 @@ public class FinishGate : MonoBehaviour
     private bool expand = true;
     private Player player;
     [SerializeField] private AudioClip winSoundClip;
+    private bool canSkip = false;
+    private bool skip = false;
     private void Update()
     {
+        if (canSkip)
+        {
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                Debug.Log("skip");
+                skip = true;
+                StopAllCoroutines();
+                GameController.instance.WinScreen();
+            }
+        }
         if (timer > duration)
         {
             timer = duration;
@@ -48,7 +59,11 @@ public class FinishGate : MonoBehaviour
         rb.velocity = Vector3.zero;
         player = collision.gameObject.GetComponent<Player>();
         player.GetAnimator().SetTrigger("Win");
-        player.GetComponent<AudioSource>().PlayOneShot(winSoundClip);
+        canSkip = true;
+        if (skip)
+        {
+            rb.transform.position = transform.position;
+        }
         rb.DOMove(transform.position, 3f);
         Sequence mysequence = DOTween.Sequence();
         mysequence.Append(player.gameObject.transform.DOScale(0, 1.5f));

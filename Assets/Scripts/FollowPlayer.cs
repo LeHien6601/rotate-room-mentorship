@@ -61,6 +61,11 @@ public class FollowPlayer : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            playing = true;
+            transform.position = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
+        }
         if (!playing) CheckFinishGate();
     }
 

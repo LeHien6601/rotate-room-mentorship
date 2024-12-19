@@ -47,8 +47,6 @@ public class Player : MonoBehaviour
     private void Update()
     {
         if (!camFollow.playing) return;
-        if (Input.GetKeyDown(KeyCode.L)) GameController.instance.loseGame();
-        if (Input.GetKeyDown(KeyCode.N)) GameController.instance.LoadNextLevel();
         //Dead trigger
         if (isDead)
         {
@@ -57,6 +55,7 @@ public class Player : MonoBehaviour
             {
                 this.gameObject.SetActive(false);
                 GameController.instance.loseGame();
+                Debug.Log("losegame");
             }
             //Faded player
             sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, sprite.color.a / 2);
@@ -390,8 +389,8 @@ public class Player : MonoBehaviour
     {
         rb.bodyType = RigidbodyType2D.Static;
         particle.Play();
-        AudioSource audioSource = GetComponent<AudioSource>();
-        audioSource.PlayOneShot(dieSoundClip);
+        //AudioSource audioSource = GetComponent<AudioSource>();
+        //audioSource.PlayOneShot(dieSoundClip);
         isDead = true;
     }
     public void setGun(Gun in_gun)
